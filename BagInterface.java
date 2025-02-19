@@ -44,4 +44,24 @@ public interface BagInterface<T>
 		 @return  A newly allocated array of all the entries in the bag.
                 Note: If the bag is empty, the returned array is empty. */
 	public T[] toArray();
+
+	/** Combine this bag with another bag
+     * @param bagToUnify The bag to be unified with this bag
+     * @return The resulting bag after combining both bags
+    */
+    public BagInterface<T> union(BagInterface<T> bagToUnify);
+
+	/** Create a new bag out of the shared entries from two bags
+     * @param bagToIntersect The bag that will be compared with this bag to
+     * check for common entries
+     * @return The resulting bag after performing the intersection operation
+    */
+    public BagInterface<T> intersection(BagInterface<T> bagToIntersect);
+
+	/** Compare this bag with another bag and remove all shared entries from this bag
+     * @param subtractionBag The bag that will take away from this bag
+     * @return The resulting bag after performing the difference operation
+    */
+    public BagInterface<T> difference(BagInterface<T> subtractionBag);
+
 } // end BagInterface
