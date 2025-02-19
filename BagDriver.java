@@ -13,7 +13,7 @@ public class BagDriver{
     public static void main (String[] args){
 
         //create 2 bags
-        BagInterface <String> bag_1 = new Linkedbag<>();
+        BagInterface <String> bag_1 = new LinkedBag<>();
         BagInterface <String> bag_2 = new ResizableArrayBag<>();
 
         //Add elements to bag 1
