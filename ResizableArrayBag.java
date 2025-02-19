@@ -111,7 +111,7 @@ public final class ResizableArrayBag<T> implements BagInterface<T>
    public boolean contains(T anEntry)
 	{
 		checkintegrity();
-      return getIndexOf(anEntry) > -1; // or >= 0
+      return getIndexOf(anEntry) >= 0;
 	} // end contains
    
 	/** Removes all entries from this bag. */
