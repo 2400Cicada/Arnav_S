@@ -6,7 +6,7 @@
  * @author Arnav Singh
  */
 
-
+import java.util.Arrays;
 
 public class BagDriver{
 
@@ -14,7 +14,7 @@ public class BagDriver{
 
         //create 2 bags
         BagInterface <String> bag_1 = new Linkedbag<>();
-        BagInterface <String> bag_2 = new ResizeableArrayBag<>();
+        BagInterface <String> bag_2 = new ResizableArrayBag<>();
 
         //Add elements to bag 1
         bag_1.add("a");
@@ -35,21 +35,21 @@ public class BagDriver{
         //Union
 
         BagInterface <String> Result_union = bag_1.union(bag_2);
-        System.out.println("Union: ", Result_union);
+        System.out.print("Union: " + Arrays.toString(Result_union.toArray()));
 
         //Intersection
 
         BagInterface <String> Result_Intersection = bag_1.intersection(bag_2);
-        System.out.println("Intersection: ", Result_Intersection);
+        System.out.println("Intersection: " + Arrays.toString(Result_Intersection.toArray()));
 
 
         //Difference
 
         BagInterface <String> Result_Difference = bag_1.difference(bag_2);
-        System.out.println("Difference bag 1 - bag 2:  ", Result_Difference);
+        System.out.println("Difference bag 1 - bag 2:  " + Arrays.toString(Result_Difference.toArray()));
 
         BagInterface <String> Result_Difference_2 = bag_2.difference(bag_1);
-        System.out.println("Difference bag 2 - bag 1:  ", Result_Difference_2);
+        System.out.println("Difference bag 2 - bag 1:  " + Arrays.toString(Result_Difference_2.toArray()));
 
 
 
