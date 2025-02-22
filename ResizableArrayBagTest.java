@@ -1,119 +1,137 @@
+import static org.junit.Assert.assertEquals;
+import org.junit.jupiter.api.Test;
+import java.util.Arrays;
+
 public class ResizableArrayBagTest {
-	public static void main(String[] args) 
-	{
-		// A bag whose initial capacity is small
-      BagInterface<String> aBag = new ResizableArrayBag<>(3);
-      testIsEmpty(aBag, true);
-      
-		System.out.println("Adding to the bag more strings than its initial capacity.");
-      String[] contentsOfBag = {"A", "D", "B", "A", "C", "A", "D"};
-		testAdd(aBag, contentsOfBag);
-
-      testIsEmpty(aBag, false);
-      String[] testStrings2 = {"A", "B", "C", "D", "Z"};
-      testFrequency(aBag, testStrings2);
-      testContains(aBag, testStrings2);
-		
-      // Removing strings
-		String[] testStrings3 = {"", "B", "A", "C", "Z"};
-      testRemove(aBag, testStrings3);
-
-		System.out.println("\nClearing the bag:");
-		aBag.clear();
-      testIsEmpty(aBag, true);
-		displayBag(aBag);
-	} // end main
-	
-   // Tests the method add.
-	private static void testAdd(BagInterface<String> aBag, String[] content)
-	{
-		System.out.print("Adding to the bag: ");
-		for (int index = 0; index < content.length; index++)
-		{
-			aBag.add(content[index]);
-         System.out.print(content[index] + " ");
-		} // end for
-      System.out.println();
-      
-		displayBag(aBag);
-	} // end testAdd
-
-   // Tests the two remove methods.
-	private static void testRemove(BagInterface<String> aBag, String[] tests)
-	{
-      for (int index = 0; index < tests.length; index++)
-      {
-         String aString = tests[index];
-         if (aString.equals("") || (aString == null))
-         {
-            // Test remove()
-            System.out.println("\nRemoving a string from the bag:");
-            String removedString = aBag.remove();
-            System.out.println("remove() returns " + removedString);
-         }
-         else
-         {
-            // Test remove(aString)
-            System.out.println("\nRemoving \"" + aString + "\" from the bag:");
-            boolean result = aBag.remove(aString);
-            System.out.println("remove(\"" + aString + "\") returns " + result);
-         } // end if
-         
-         displayBag(aBag);
-      } // end for
-	} // end testRemove
-
-   // Tests the method isEmpty.
-   // correctResult indicates what isEmpty should return.   
-	private static void testIsEmpty(BagInterface<String> aBag, boolean correctResult)
-	{
-      System.out.print("Testing isEmpty with ");
-      if (correctResult)
-         System.out.println("an empty bag:");
-      else
-         System.out.println("a bag that is not empty:");
-      
-      System.out.print("isEmpty finds the bag ");
-      if (correctResult && aBag.isEmpty())
-			System.out.println("empty: OK.");
-		else if (correctResult)
-			System.out.println("not empty, but it is empty: ERROR.");
-		else if (!correctResult && aBag.isEmpty())
-			System.out.println("empty, but it is not empty: ERROR.");
-		else
-			System.out.println("not empty: OK.");      
-		System.out.println();
-	} // end testIsEmpty
-
-   // Tests the method getFrequencyOf.
-	private static void testFrequency(BagInterface<String> aBag, String[] tests)
-	{
- 		System.out.println("\nTesting the method getFrequencyOf:");
-      for (int index = 0; index < tests.length; index++)
-         System.out.println("In this bag, the count of " + tests[index] + 
-                            " is " + aBag.getFrequencyOf(tests[index]));
-   } // end testFrequency
    
-   // Tests the method contains.
-	private static void testContains(BagInterface<String> aBag, String[] tests)
-	{
- 		System.out.println("\nTesting the method contains:");
-      for (int index = 0; index < tests.length; index++)
-         System.out.println("Does this bag contain " + tests[index] + 
-                            "? " + aBag.contains(tests[index]));
-   } // end testContains
+   @Test
+   void testAddAndToArray() {
+      BagInterface<String> testBag = new ResizableArrayBag<String>();
+      testBag.add("A");
+      testBag.add("B");
+      testBag.add("C");
+      testBag.add("D");
+      assertEquals(Arrays.toString(testBag.toArray()), "[A, B, C, D]");
+   }
 
-   // Tests the method toArray while displaying the bag.
-	private static void displayBag(BagInterface<String> aBag)
-	{
-		System.out.println("The bag contains " + aBag.getCurrentSize() +
-		                   " string(s), as follows:");		
-		Object[] bagArray = aBag.toArray();
-		for (int index = 0; index < bagArray.length; index++)
-		{
-			System.out.print(bagArray[index] + " ");
-		} // end for
-		
-		System.out.println();
-	} // end displayBag
-} // end ResizableArrayBagDemo
+   @Test
+   void testRemoveAndToArray() {
+      BagInterface<String> testBag = new ResizableArrayBag<String>();
+      testBag.add("A");
+      testBag.add("B");
+      testBag.add("C");
+      testBag.add("D");
+      testBag.remove("A");
+      testBag.remove("B");
+      testBag.remove("Z");
+      assertEquals(Arrays.toString(testBag.toArray()), "[D, C]");
+   }
+
+   @Test
+   void testGetCurrentSize() {
+      BagInterface<String> testBag = new ResizableArrayBag<String>();
+      assertEquals(testBag.getCurrentSize(), 0);
+      testBag.add("A");
+      testBag.add("B");
+      testBag.add("C");
+      testBag.add("D");
+      assertEquals(testBag.getCurrentSize(), 4);
+   }
+
+   @Test
+   void testIsEmpty() {
+      BagInterface<String> testBag = new ResizableArrayBag<String>();
+      assertEquals(testBag.isEmpty(), true);
+      testBag.add("A");
+      testBag.add("B");
+      testBag.add("C");
+      testBag.add("D");
+      assertEquals(testBag.isEmpty(), false);
+   }
+
+   @Test
+   void testClear() {
+      BagInterface<String> testBag = new ResizableArrayBag<String>();
+      testBag.add("A");
+      testBag.add("B");
+      testBag.add("C");
+      testBag.add("D");
+      testBag.clear();
+      assertEquals(testBag.isEmpty(), true);
+   }
+
+   @Test
+   void testGetFrequencyOf() {
+      BagInterface<String> testBag = new ResizableArrayBag<String>();
+      testBag.add("A");
+      testBag.add("A");
+      testBag.add("A");
+      testBag.add("B");
+      assertEquals(testBag.getFrequencyOf("A"), 3);
+      assertEquals(testBag.getFrequencyOf("B"), 1);
+      assertEquals(testBag.getFrequencyOf("C"), 0);
+   }
+
+   @Test
+   void testContains() {
+      BagInterface<String> testBag = new ResizableArrayBag<String>();
+      testBag.add("A");
+      assertEquals(testBag.contains("A"), true);
+      assertEquals(testBag.contains("B"), false);
+   }
+
+   @Test
+   void testUnion() {
+      BagInterface<String> testBag1 = new ResizableArrayBag<String>();
+      BagInterface<String> testBag2 = new ResizableArrayBag<String>();
+      BagInterface<String> testBag3 = new ResizableArrayBag<String>();
+      testBag1.add("A");
+      testBag1.add("B");
+      testBag1.add("C");
+      testBag1.add("D");
+      testBag2.add("E");
+      testBag2.add("F");
+      assertEquals(Arrays.toString(testBag1.union(testBag2).toArray()), "[A, B, C, D, E, F]");
+      assertEquals(Arrays.toString(testBag1.union(testBag3).toArray()), "[A, B, C, D]");
+      assertEquals(Arrays.toString(testBag2.union(testBag3).toArray()), "[E, F]");
+   }
+
+   @Test
+   void testIntersection() {
+      BagInterface<String> testBag1 = new ResizableArrayBag<String>();
+      BagInterface<String> testBag2 = new ResizableArrayBag<String>();
+      BagInterface<String> testBag3 = new ResizableArrayBag<String>();
+      testBag1.add("A");
+      testBag1.add("B");
+      testBag1.add("C");
+      testBag1.add("D");
+      testBag2.add("A");
+      testBag2.add("B");
+      testBag2.add("F");
+      assertEquals(Arrays.toString(testBag1.intersection(testBag2).toArray()), "[A, B]");
+      assertEquals(Arrays.toString(testBag2.intersection(testBag1).toArray()), "[A, B]");
+      assertEquals(Arrays.toString(testBag1.intersection(testBag3).toArray()), "[]");
+      assertEquals(Arrays.toString(testBag2.intersection(testBag3).toArray()), "[]");
+      assertEquals(Arrays.toString(testBag3.intersection(testBag3).toArray()), "[]");
+   }
+
+   @Test
+   void testDifference() {
+      BagInterface<String> testBag1 = new ResizableArrayBag<String>();
+      BagInterface<String> testBag2 = new ResizableArrayBag<String>();
+      BagInterface<String> testBag3 = new ResizableArrayBag<String>();
+      testBag1.add("A");
+      testBag1.add("B");
+      testBag1.add("C");
+      testBag1.add("D");
+      testBag2.add("A");
+      testBag2.add("B");
+      testBag2.add("F");
+      assertEquals(Arrays.toString(testBag1.difference(testBag2).toArray()), "[D, C]");
+      assertEquals(Arrays.toString(testBag2.difference(testBag1).toArray()), "[F]");
+      assertEquals(Arrays.toString(testBag1.difference(testBag3).toArray()), "[A, B, C, D]");
+      assertEquals(Arrays.toString(testBag2.difference(testBag3).toArray()), "[A, B, F]");
+      assertEquals(Arrays.toString(testBag3.difference(testBag2).toArray()), "[]");
+      assertEquals(Arrays.toString(testBag3.difference(testBag3).toArray()), "[]");
+   }
+}
