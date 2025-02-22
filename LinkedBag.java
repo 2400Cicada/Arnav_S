@@ -63,6 +63,7 @@ public class LinkedBag<T> implements BagInterface<T> {
     @Override
     public void clear(){
         firstNode = null;
+        numberOfEntries = 0;
     }
 
     @Override
@@ -137,8 +138,7 @@ public class LinkedBag<T> implements BagInterface<T> {
         T[] array1 = this.toArray();
         T[] array2 = bagToUnify.toArray();
 
-        int resultLength = array1.length + array2.length;
-        BagInterface<T> resultBag = new ResizableArrayBag<>(resultLength);
+        BagInterface<T> resultBag = new LinkedBag<>();
 
         for(int i = 0; i < array1.length; i++){
             resultBag.add(array1[i]);
@@ -155,24 +155,18 @@ public class LinkedBag<T> implements BagInterface<T> {
     public BagInterface<T> intersection(BagInterface<T> bagToIntersect){
         
         T[] array1 = this.toArray();
-        T[] array2 = bagToIntersect.toArray();
         int resultLength;
         int difference = 0;
 
-        if(array1.length > array2.length){
-            resultLength = array1.length;
-        }
-        else{
-            resultLength = array2.length;
-        }
+        resultLength = array1.length;
 
-        BagInterface<T> resultBag = new ResizableArrayBag<>(resultLength);
-        BagInterface<T> blacklistBag = new ResizableArrayBag<>(resultLength);
+        BagInterface<T> resultBag = new LinkedBag<>();
+        BagInterface<T> blacklistBag = new LinkedBag<>();
 
         
         for(int i = 0; i < resultLength; i++){
             if(this.contains(array1[i]) && bagToIntersect.contains(array1[i]) && !blacklistBag.contains(array1[i])){
-                difference = Math.abs(this.getFrequencyOf(array1[i]) - bagToIntersect.getFrequencyOf(array1[i]));
+                difference = Math.min(this.getFrequencyOf(array1[i]), bagToIntersect.getFrequencyOf(array1[i]));
                 while(difference != 0){
                     resultBag.add(array1[i]);
                     blacklistBag.add(array1[i]);
@@ -189,8 +183,8 @@ public class LinkedBag<T> implements BagInterface<T> {
 
         T[] array1 = this.toArray();
 
-        BagInterface<T> resultBag = new ResizableArrayBag<>(this.getCurrentSize());
-        BagInterface<T> blacklistBag = new ResizableArrayBag<>(subtractionBag.getCurrentSize());
+        BagInterface<T> resultBag = new LinkedBag<>();
+        BagInterface<T> blacklistBag = new LinkedBag<>();
 
         for(int i = 0; i < array1.length; i++){
             if(!subtractionBag.contains(array1[i]) && !blacklistBag.contains(array1[i])){

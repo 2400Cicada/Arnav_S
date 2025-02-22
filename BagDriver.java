@@ -35,7 +35,7 @@ public class BagDriver{
         //Union
 
         BagInterface <String> Result_union = bag_1.union(bag_2);
-        System.out.print("Union: " + Arrays.toString(Result_union.toArray()));
+        System.out.println("Union: " + Arrays.toString(Result_union.toArray()));
 
         //Intersection
 
