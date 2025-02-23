@@ -180,21 +180,23 @@ public class LinkedBag<T> implements BagInterface<T> {
      */
     @Override
     public BagInterface<T> union(BagInterface<T> bagToUnify){
+        // Create the bags and arrays
         T[] array1 = this.toArray();
         T[] array2 = bagToUnify.toArray();
 
         BagInterface<T> resultBag = new LinkedBag<>();
 
+        // Combine both arrays into new bag
         for(int i = 0; i < array1.length; i++){
             resultBag.add(array1[i]);
-        }
+        } // end for
 
         for(int i = 0; i < array2.length; i++){
             resultBag.add(array2[i]);
-        }
+        } // end for
 
         return resultBag;
-    }
+    } // end union
 
     /** Combines the contents that two bags have in common
      * @param bagToIntersect The bag being used in intersection if the current bag.
@@ -202,7 +204,7 @@ public class LinkedBag<T> implements BagInterface<T> {
      */
     @Override
     public BagInterface<T> intersection(BagInterface<T> bagToIntersect){
-        
+        //Create bags and arrays
         T[] array1 = this.toArray();
         int resultLength;
         int difference = 0;
@@ -212,7 +214,7 @@ public class LinkedBag<T> implements BagInterface<T> {
         BagInterface<T> resultBag = new LinkedBag<>();
         BagInterface<T> blacklistBag = new LinkedBag<>();
 
-        
+        // loop through new array and check for common values between the two bags
         for(int i = 0; i < resultLength; i++){
             if(this.contains(array1[i]) && bagToIntersect.contains(array1[i]) && !blacklistBag.contains(array1[i])){
                 difference = Math.min(this.getFrequencyOf(array1[i]), bagToIntersect.getFrequencyOf(array1[i]));
@@ -222,10 +224,10 @@ public class LinkedBag<T> implements BagInterface<T> {
                     difference--;
                 }
             }
-        }
+        } // end for
 
         return resultBag;
-    }
+    } // end intersection
 
     /** Creates a new bag which doesn't include the common values from the two used bags.
      * @param subtractionBag Bag whose contents are used to remove the contents of the current bag
@@ -235,11 +237,13 @@ public class LinkedBag<T> implements BagInterface<T> {
     @Override
     public BagInterface<T> difference(BagInterface<T> subtractionBag){
 
+        // Create arrays and Bags
         T[] array1 = this.toArray();
 
         BagInterface<T> resultBag = new LinkedBag<>();
         BagInterface<T> blacklistBag = new LinkedBag<>();
 
+        // Iterate through array1, checking for differences in blacklistbag and subtractionbag
         for(int i = 0; i < array1.length; i++){
             if(!subtractionBag.contains(array1[i]) && !blacklistBag.contains(array1[i])){
                 resultBag.add(array1[i]);
@@ -248,10 +252,10 @@ public class LinkedBag<T> implements BagInterface<T> {
             if(resultBag.getFrequencyOf(array1[i]) == (this.getFrequencyOf(array1[i]) - subtractionBag.getFrequencyOf(array1[i]))){
                 blacklistBag.add(array1[i]);
             }
-        }
+        } // end for
 
         return resultBag;
-    }
+    } // end difference
 
     private class Node{
         private T data; // entry in bag
