@@ -4,13 +4,13 @@ Josiah Degeneffe (jwdegeneffe@cpp.edu, JosiahD1234)
 
 Warren Maxwell (wjmaxwell@cpp.edu, Tausetii)
 
-Arnav Singh
+Arnav Singh (arnavsingh1@cpp.edu, ArnavSingh121)
 
 Josiah's Role: Created ResizableArrayBag.java and ResizableArrayBagTest.java
 
 Warren's Role: Created LinkedBag.java and LinkedBagTest.java
 
-Arnav's Role: 
+Arnav's Role: Created BagInterface.java and BagDriver.java
 
 Bag testing for LinkedBagTest.java and ResizableArrayBagTest.java were both carried out with JUnit.
 
