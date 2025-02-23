@@ -10,6 +10,6 @@ Josiah's Role: Created ResizableArrayBag.java and ResizableArrayBagTest.java, as
 
 Arnav's Role: 
 
-Warren's Role: 
+Warren's Role: Created LinkedBag.java and LinkedBagTest.java
 
-Screencast Link: 
+Screencast Link: https://vimeo.com/1059396007/6fe3a48969?share=copy
