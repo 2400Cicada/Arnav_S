@@ -6,11 +6,11 @@ Warren Maxwell (wjmaxwell@cpp.edu, Tausetii)
 
 Arnav Singh
 
-Josiah's Role: Created ResizableArrayBag.java and ResizableArrayBagTest.java, as well as creating the methods union, intersection, and difference for ResizableArrayBag
-
-Arnav's Role: 
+Josiah's Role: Created ResizableArrayBag.java and ResizableArrayBagTest.java
 
 Warren's Role: Created LinkedBag.java and LinkedBagTest.java
+
+Arnav's Role: 
 
 Bag testing for LinkedBagTest.java and ResizableArrayBagTest.java were both carried out with JUnit.
 
