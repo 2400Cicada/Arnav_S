@@ -5,10 +5,12 @@
 *
 *   @author Warren Maxwell
 */
+
 public class LinkedBag<T> implements BagInterface<T> {
     private Node firstNode;
     private int numberOfEntries;
 
+    /** Creates an empty bag */
     public LinkedBag()
     {
         firstNode = null;
@@ -62,7 +64,7 @@ public class LinkedBag<T> implements BagInterface<T> {
     } //end remove
 
     /** Removes on occurence of a given entry from this bag, if possible.
-     * @param enEntry The entry to be removed.
+     * @param anEntry The entry to be removed.
      * @return True if the removal was successful, or false otherwise. 
      */
     @Override
@@ -226,7 +228,7 @@ public class LinkedBag<T> implements BagInterface<T> {
     }
 
     /** Creates a new bag which doesn't include the common values from the two used bags.
-     * @param subractionBag Bag whos contents are used to remove the contents of the current bag.
+     * @param subtractionBag Bag whose contents are used to remove the contents of the current bag
      * @return A new bag containing the contents that are left in the current bag after removing
      * contents using the subtractionBag.
       */

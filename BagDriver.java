@@ -1,12 +1,12 @@
+import java.util.Arrays;
+
 /**
  * 
  * Driver to create and check all the bags for Union, Intersection and Difference 
  * 
  * 
  * @author Arnav Singh
- */
-
-import java.util.Arrays;
+*/
 
 public class BagDriver{
 
