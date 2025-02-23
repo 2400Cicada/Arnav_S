@@ -50,6 +50,9 @@ public class LinkedBag<T> implements BagInterface<T> {
         return true;
     } // end add
 
+    /** Removes one unspecified entry from this bag, if possible.
+     * @return Either the removed entry, if the removal was successful or null.
+     */
     @Override
     public T remove(){
         T result = null;
