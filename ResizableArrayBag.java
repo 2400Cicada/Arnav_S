@@ -1,5 +1,11 @@
 import java.util.Arrays;
 
+/**
+   A class that implements a bag of objects by using an array.
+	The bag is never full.
+   @author Josiah Degeneffe
+*/
+
 public final class ResizableArrayBag<T> implements BagInterface<T>
 {
 	private T[] bag; // Cannot be final due to doubling
@@ -193,7 +199,7 @@ public final class ResizableArrayBag<T> implements BagInterface<T>
     } // end intersection
 
     /** Compare this bag with another bag and remove all shared entries from this bag
-     * @param subtractionBag The bag that will take away from this bag
+     * @param subtractionBag Bag whose contents are used to remove the contents of the current bag
      * @return The resulting bag after performing the difference operation
     */
     public BagInterface<T> difference(BagInterface<T> subtractionBag) {
