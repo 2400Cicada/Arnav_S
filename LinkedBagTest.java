@@ -1,6 +1,15 @@
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
+import java.util.Arrays;
+
+import org.junit.jupiter.api.Test;
+
 /**
  * 
- * Application used to test the LinkedBag class.
+ * Application used to test different methods of LinkedBag and Node.
  * 
  * 
  * @author Warren Maxwell
@@ -8,118 +17,207 @@
 
 public class LinkedBagTest {
     
-    public static void main(String[] args) {
-        // Tests on a bag that is empty
-        System.out.println("Creating an empty bag");
-        BagInterface<String> aBag = new LinkedBag<>();
-        displayBag(aBag);
-        testIsEmpty(aBag,true);
-        String[] testStrings1 = {"","B"};
-        testFrequency(aBag, testStrings1);
-        testContains(aBag,testStrings1);
-        testRemove(aBag,testStrings1);
+    /**Test the add and toArray functions in LinkedBag */
+    @Test
+   void testAddAndToArray() {
+      BagInterface<String> testBag = new LinkedBag<String>();
+      String[] testStrings1 = {"A", "B","C","A","D","D","A"};
 
-        // Adding strings
-        String[] contentsOfBag = {"A","D","B","A","C","A","D"};
-        testAdd(aBag,contentsOfBag);
+      for(int i = 0; i < testStrings1.length; i++){
+        testBag.add(testStrings1[i]);
+      }
 
-        // Tests on a bag that is not empty
-        testIsEmpty(aBag,false);
-        String[] testStrings2 = {"A","B","C","D","Z"};
-        testFrequency(aBag,testStrings2);
-        testContains(aBag,testStrings2);
+      assertEquals(Arrays.toString(testBag.toArray()), "[A, D, D, A, C, B, A]");
+      assertNotEquals(Arrays.toString(testBag.toArray()), "[A, Z]");
+   } // end testAddAndToArray
 
-        // Removing strings
-        String[] testStrings3 = {"","B","A","C","Z"};
-        testRemove(aBag,testStrings3);
+    /**Test the remove, add, and toArray functions in LinkedBag */
+   @Test
+   void testRemoveAndToArray() {
+      BagInterface<String> testBag = new LinkedBag<String>();
 
-        System.out.println("\nClearing the bag:");
-        aBag.clear();
-        testIsEmpty(aBag,true);
-        displayBag(aBag);
+      String[] testStrings1 = {"A", "B", "C", "A", "D", "D", "A"};
+      String[] removeStrings1 = {"A", "A", "A"};
 
-    } // end main
+      for(int i = 0; i < testStrings1.length; i++){
+        testBag.add(testStrings1[i]);
+      }
 
-    public static void testAdd(BagInterface<String> aBag, String[] content){
-        System.out.print("Adding to the bag: ");
-        for(int index = 0; index < content.length; index++){
-            aBag.add(content[index]);
-            System.out.print(content[index] + " ");
-        }
-        System.out.println();
-        displayBag(aBag);
-    }
+      for(int i = 0; i < removeStrings1.length; i++){
+        testBag.remove(removeStrings1[i]);
+      }
 
-    public static void testRemove(BagInterface<String> aBag, String[] tests) {
-        
-        for (int index = 0; index < tests.length; index++){
-         String aString = tests[index];
-         if (aString.equals("") || (aString == null))
-         {
-            // Test remove()
-            System.out.println("\nRemoving a string from the bag:");
-            String removedString = aBag.remove();
-            System.out.println("remove() returns " + removedString);
-         }
-         else
-         {
-            // Test remove(aString)
-            System.out.println("\nRemoving \"" + aString + "\" from the bag:");
-            boolean result = aBag.remove(aString);
-            System.out.println("remove(\"" + aString + "\") returns " + result);
-         } // end if
-         
-         displayBag(aBag);
-    }
-    }
+      assertNotEquals(Arrays.toString(testBag.toArray()), "[A, A, A]");
+      assertEquals(Arrays.toString(testBag.toArray()), "[D, C, B, D]");
+   } // end 'testRemoveAndToArray'
 
-    public static void testIsEmpty(BagInterface<String> aBag, boolean correctResult){
-        
-        System.out.print("\nTesting the method isEmpty with ");
-        if(correctResult){
-            System.out.println("an empty bag:");
-        }else{
-            System.out.println("a bag that is not empty:");
-        }
+   /**Test the add, getCurrentSize and toArray functions in LinkedBag */
+   @Test
+   void testGetCurrentSize() {
+      BagInterface<String> testBag = new LinkedBag<String>();
 
-        System.out.print("isEmpty finds the bag ");
-        if(correctResult && aBag.isEmpty())
-            System.out.println("empty: OK.");
-        else if(correctResult)
-            System.out.println("not empty, but it is empty: ERROR.");
-        else if(!correctResult && aBag.isEmpty())
-            System.out.println("empty, but it is not empty: ERROR.");
-        else
-            System.out.println("not empty: OK.");
-    }
+      assertEquals(testBag.getCurrentSize(), 0);
+      
+      String[] testStrings1 = {"A", "B", "C", "A", "D", "D", "A"};
 
-    public static void testFrequency(BagInterface<String> aBag, String[] content){
-        
-        System.out.println("\nTesting the method getFrequencyOf:");
+      for(int i = 0; i < testStrings1.length; i++){
+        testBag.add(testStrings1[i]);
+      }
 
-        for (int index = 0; index < content.length; index++){
-        System.out.println("In this bag, the count of " + content[index] + 
-                            " is " + aBag.getFrequencyOf(content[index]));
-        }
-    }   
+      assertEquals(testBag.getCurrentSize(), 7);
+   } // end testGetCurrentSize
 
-    public static void testContains(BagInterface<String> aBag, String[] content){
-        
-        System.out.println("\nTesting the method contains:");
-        
-        for (int index = 0; index < content.length; index++){
-        System.out.println("Does this bag contain " + content[index] + 
-                            "? " + aBag.contains(content[index]));
-        }
-    }
+   /**Test the add, isEmpty and toArray functions in LinkedBag */
+   @Test
+   void testIsEmpty() {
+      BagInterface<String> testBag = new LinkedBag<String>();
 
-    public static void displayBag(BagInterface<String> aBag){
-        System.out.println("The bag contains the following string(s):");
-        Object[] bagArray = aBag.toArray();
-        for(int index = 0; index < bagArray.length; index++){
-            System.out.print(bagArray[index] + " ");
-        }
+      assertTrue(testBag.isEmpty());
 
-        System.out.println();
-    }
-}
+      String[] testStrings1 = {"A", "B", "C", "A", "D", "D", "A"};
+
+      for(int i = 0; i < testStrings1.length; i++){
+        testBag.add(testStrings1[1]);
+      }
+
+      assertFalse(testBag.isEmpty());    
+   } // end testIsEmpty
+
+   /**Test the add, clear, isEmpty and toArray functions in LinkedBag */
+   @Test
+   void testClear() {
+      BagInterface<String> testBag = new LinkedBag<String>();
+      
+      String[] testStrings1 = {"A", "B", "C", "A", "D", "D", "A"};
+
+      for(int i = 0; i < testStrings1.length; i++){
+        testBag.add(testStrings1[i]);
+      }
+
+      testBag.clear();
+
+      assertTrue(testBag.isEmpty());
+   } // end testClear
+
+   /**Test the add, getFrequencyOf and toArray functions in LinkedBag */
+   @Test
+   void testGetFrequencyOf() {
+      BagInterface<String> testBag = new LinkedBag<String>();
+
+      assertTrue(testBag.getFrequencyOf("Z") == 0);
+
+      String[] testStrings1 = {"A", "B", "C", "A", "D", "D", "A"};
+
+      for(int i = 0; i < testStrings1.length; i++){
+        testBag.add(testStrings1[i]);
+      }
+
+      assertTrue(testBag.getFrequencyOf("A") == 3);
+   } // end testGetFrequencyOf
+
+   /**Test the add, contains and toArray functions in LinkedBag */
+   @Test
+   void testContains() {
+      BagInterface<String> testBag = new LinkedBag<String>();
+
+      String[] testStrings1 = {"A", "B", "C", "A", "D", "D", "A"};
+
+      for(int i = 0; i < testStrings1.length; i++){
+        testBag.add(testStrings1[i]);
+      }
+
+      assertFalse(testBag.contains("Z"));
+      assertTrue(testBag.contains("A"));  
+   } // end testContains
+
+   /**Test the add, union and toArray functions in LinkedBag */
+   @Test
+   void testUnion() {
+      BagInterface<String> testBag1 = new LinkedBag<String>();
+      BagInterface<String> testBag2 = new LinkedBag<String>();
+      BagInterface<String> testBag3 = new LinkedBag<String>();
+
+      String[] testStrings1 = {"A", "B", "C", "A", "D", "D", "A"};
+      String[] testStrings3 = {"A", "B", "B", "A"};
+      String[] testStrings2 = {"Z"};
+
+      for(int i = 0; i < testStrings1.length; i++){
+        testBag1.add(testStrings1[i]);
+      }
+
+      for(int i = 0; i < testStrings2.length; i++){
+        testBag2.add(testStrings2[i]);
+      }
+
+      for(int i = 0; i < testStrings3.length; i++){
+        testBag3.add(testStrings3[i]);
+      }
+
+      assertEquals(Arrays.toString(testBag1.union(testBag2).toArray()), "[Z, A, B, C, A, D, D, A]");
+      assertEquals(Arrays.toString(testBag1.union(testBag3).toArray()), "[A, B, B, A, A, B, C, A, D, D, A]" );
+      assertEquals(Arrays.toString(testBag2.union(testBag3).toArray()), "[A, B, B, A, Z]");
+   } // end testUnion
+
+   /**Test the add, intersection and toArray functions in LinkedBag */
+   @Test
+   void testIntersection() {
+      BagInterface<String> testBag1 = new LinkedBag<String>();
+      BagInterface<String> testBag2 = new LinkedBag<String>();
+      BagInterface<String> testBag3 = new LinkedBag<String>();
+
+      String[] testStrings1 = {"A", "B", "C", "A", "D", "D", "A"};
+      String[] testStrings3 = {};
+      String[] testStrings2 = {"A", "B", "C", "D"};
+
+      for(int i = 0; i < testStrings1.length; i++){
+        testBag1.add(testStrings1[i]);
+      }
+
+      for(int i = 0; i < testStrings2.length; i++){
+        testBag2.add(testStrings2[i]);
+      }
+
+      for(int i = 0; i < testStrings3.length; i++){
+        testBag3.add(testStrings3[i]);
+      }
+      
+      assertEquals(Arrays.toString(testBag1.intersection(testBag2).toArray()), "[B, C, D, A]");
+      assertEquals(Arrays.toString(testBag2.intersection(testBag3).toArray()), "[]" );
+      assertEquals(Arrays.toString(testBag3.intersection(testBag1).toArray()), "[]");
+      assertEquals(Arrays.toString(testBag1.intersection(testBag1).toArray()), "[B, C, D, D, A, A, A]");
+      assertEquals(Arrays.toString(testBag2.intersection(testBag2).toArray()), "[A, B, C, D]" );
+      assertEquals(Arrays.toString(testBag3.intersection(testBag3).toArray()), "[]");
+   } // end testIntersection
+
+   /**Test the add, difference and toArray functions in LinkedBag */
+   @Test
+   void testDifference() {
+      BagInterface<String> testBag1 = new LinkedBag<String>();
+      BagInterface<String> testBag2 = new LinkedBag<String>();
+      BagInterface<String> testBag3 = new LinkedBag<String>();
+
+      String[] testStrings1 = {"A", "B", "C", "A", "D", "D", "A"};
+      String[] testStrings3 = {};
+      String[] testStrings2 = {"A, B, C, D"};
+
+      for(int i = 0; i < testStrings1.length; i++){
+        testBag1.add(testStrings1[i]);
+      }
+
+      for(int i = 0; i < testStrings2.length; i++){
+        testBag2.add(testStrings2[i]);
+      }
+
+      for(int i = 0; i < testStrings3.length; i++){
+        testBag3.add(testStrings3[i]);
+      }
+
+      assertEquals(Arrays.toString(testBag1.difference(testBag2).toArray()), "[A, B, C, A, D, D, A]");
+      assertEquals(Arrays.toString(testBag1.difference(testBag3).toArray()), "[A, B, C, A, D, D, A]" );
+      assertEquals(Arrays.toString(testBag2.difference(testBag1).toArray()), "[A, B, C, D]");
+      assertEquals(Arrays.toString(testBag2.difference(testBag3).toArray()), "[A, B, C, D]");
+      assertEquals(Arrays.toString(testBag3.difference(testBag1).toArray()), "[]" );
+      assertEquals(Arrays.toString(testBag3.difference(testBag2).toArray()), "[]");
+   } // end testDifference
+} // end LinkedBag
+
